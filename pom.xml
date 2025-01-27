@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cydeo</groupId>
-    <artifactId>fake-user-app</artifactId>
+    <artifactId>faker-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>fake-user-app</name>
-    <description>fake-user-app</description>
+    <name>faker-app</name>
+    <description>faker-app</description>
     <properties>
         <java.version>11</java.version>
     </properties>
