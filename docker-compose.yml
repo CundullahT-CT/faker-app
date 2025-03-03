@@ -1,0 +1,44 @@
+networks:
+  faker-network:
+    driver: bridge
+
+volumes:
+  faker-data:
+
+services:
+  faker-db-container:
+    image: postgres
+    container_name: faker-db-container
+#    env_file:
+#      - .db_env_variables
+    environment:
+      POSTGRES_DB: faker-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    networks:
+      - faker-network
+    volumes:
+      - faker-data:/var/lib/postgresql/data
+    ports:
+      - '5435:5432'
+    restart: always
+  faker-app-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+#    image: cundullaht/faker-app:latest
+    image: faker-app:latest
+    container_name: faker-app-container
+#    env_file:
+#      - .app_env_variables
+    environment:
+      FAKER_DB_URL: jdbc:postgresql://faker-db-container:5432/faker-db
+      FAKER_DB_USERNAME: postgres
+      FAKER_DB_PASSWORD: admin
+    networks:
+      - faker-network
+    ports:
+      - '9090:8080'
+    depends_on:
+      faker-db-container:
+        condition: service_started
